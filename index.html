@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>➡️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fad0c4,#fbc2eb);
+background-size:400% 400%;
+animation:bg 12s infinite;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+background:rgba(0,0,0,0.45);
+padding:25px;
+border-radius:15px;
+color:white;
+width:90%;
+max-width:500px;
+text-align:center;
+backdrop-filter:blur(10px);
+}
+
+input{
+width:80%;
+padding:12px;
+margin:10px;
+border:none;
+border-radius:8px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+background:#ff4b91;
+color:white;
+font-weight:bold;
+}
+
+#letter{
+display:none;
+height:70vh;
+overflow-y:auto;
+text-align:left;
+line-height:1.8;
+}
+
+p{
+margin-bottom:20px;
+font-size:17px;
+}
+
+/* hearts */
+
+.heart{
+position:absolute;
+color:white;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<audio id="bgmusic" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="login">
+
+<h2>➡️(ง •_•)ง</h2>
+
+<input id="user" placeholder="Username"><br>
+<input id="pass" type="password" placeholder="Password"><br>
+
+<button onclick="login()">Enter</button>
+
+</div>
+
+<div class="container" id="letter">
+
+<h2>Dear Oishi</h2>
+
+<div id="text"></div>
+
+</div>
+
+<script>
+
+function login(){
+
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
+
+if(u=="oishi" && p=="rikto"){
+
+document.getElementById("login").style.display="none";
+document.getElementById("letter").style.display="block";
+
+/* 🔥 FIX: play music */
+let music=document.getElementById("bgmusic");
+music.play().catch(()=>{});
+
+startTyping();
+
+}else{
+alert("Wrong username or password");
+}
+
+}
+
+/* paragraphs */
+let paragraphs=[
+"Sometimes life introduces us to people in the most unexpected ways. We may never meet them in person, yet they slowly become an important part of our everyday life.",
+
+"Our friendship feels exactly like that to me. Even though we have never met face to face, the connection we built through our conversations feels very genuine.",
+
+"You are truly a wonderful person. Your kindness, your way of speaking, and the understanding you show make you special.",
+
+"There were many times when I felt mentally tired or a little low, but after talking with you those feelings quietly disappeared.",
+
+"It is surprising how someone you met online can slowly become such an important part of your life.❤️‍🩹",
+
+"Please never forget me as a friend.😣",
+
+" Rikto"
+];
+
+let i=0;
+
+/* typing function */
+function typeText(text, element, cb){
+
+let j=0;
+element.innerHTML="";
+
+function typing(){
+
+if(j<text.length){
+element.innerHTML+=text.charAt(j);
+j++;
+setTimeout(typing,120);
+}else{
+cb();
+}
+
+}
+
+typing();
+}
+
+/* paragraph control */
+function startTyping(){
+
+if(i<paragraphs.length){
+
+let p=document.createElement("p");
+document.getElementById("text").appendChild(p);
+
+typeText(paragraphs[i], p, ()=>{
+
+i++;
+startTyping();
+
+});
+
+}
+
+}
+
+/* hearts */
+setInterval(()=>{
+
+let heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(10+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},500);
+
+</script>
+
+</body>
+</html>
